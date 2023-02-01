@@ -1,0 +1,30 @@
+version: "3"
+services:  
+  db:
+    image: postgres:13
+    container_name: dreamsports
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.ignore/postgres/postgres:/var/lib/postgresql/data
+    environment:
+    - POSTGRES_NAME=dreamsports
+    - NEW_POSTGRES_NAME=dreamsports
+    - POSTGRES_PASSWORD=dreamsports
+    - POSTGRES_USER=dreamsports
+    - POSTGRES_DB=dreamsports
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app/
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm run dev'
+    env_file:
+      - .env
+    depends_on:
+      - db
