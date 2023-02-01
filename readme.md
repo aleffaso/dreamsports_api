@@ -1,6 +1,6 @@
 # DreamSports API
 
-<p>
+<p align=center>
     <img src="info/wallpaper.png">
 </p>
 
@@ -38,7 +38,7 @@ Add `.env` file into main folder, and put:
 - `ORMCONFIG`=docker
 - `ORMCONFIG_PORT`=5432
 
-<br>
+<hr>
 
 ## Get docker
 
