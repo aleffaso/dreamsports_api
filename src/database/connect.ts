@@ -1,3 +1,9 @@
-import { createConnection } from "typeorm";
+import { AppDataSource } from "../data-source";
 
-createConnection().then(() => console.log("Connection with database established"))
+AppDataSource.initialize()
+  .then(() => {
+    console.log("Data Source has been initialized");
+  })
+  .catch((err) => {
+    console.log("Error during Data Source initialization: ", err);
+  });
