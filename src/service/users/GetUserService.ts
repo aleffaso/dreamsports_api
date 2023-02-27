@@ -1,15 +1,11 @@
 import { AppDataSource } from "../../data-source";
-import { instanceToPlain } from "class-transformer";
 
-import { User } from "../../entities/User";
-
-interface IUserRequest {
-  id: string;
-}
+import { User as UserTable } from "../../entities/User";
+import { UserId, UserResponse } from "./types";
 
 class GetUserService {
-  async execute({ id }: IUserRequest) {
-    const userRepo = AppDataSource.getRepository(User);
+  async execute({ id }: UserId) {
+    const userRepo = AppDataSource.getRepository(UserTable);
 
     const user = await userRepo.findOne({ where: { id } });
 
@@ -20,7 +16,15 @@ class GetUserService {
       };
     }
 
-    return instanceToPlain(user);
+    const userResponse: UserResponse = {
+      id: id,
+      name: user.name,
+      admin: user.admin,
+      is_active: user.is_active,
+      email: user.email,
+    };
+
+    return { user: userResponse };
   }
 }
 

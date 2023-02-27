@@ -5,35 +5,29 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
-  BeforeInsert,
-  BeforeUpdate,
 } from "typeorm";
 import { v4 as uuid } from "uuid"; //generate random id
-import bcrypt from "bcryptjs";
 
 @Entity("users")
 class User {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
-  @Column()
+  @Column({ nullable: false })
   name: string;
 
-  @Column()
+  @Column({ nullable: false })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   admin: boolean;
 
   @Exclude()
-  @Column()
+  @Column({ nullable: false })
   password: string;
 
-  @BeforeInsert()
-  @BeforeUpdate()
-  hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8);
-  }
+  @Column({ nullable: false, default: true })
+  is_active: boolean;
 
   @CreateDateColumn()
   created_at: Date;

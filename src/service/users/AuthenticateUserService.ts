@@ -3,18 +3,12 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import { AppDataSource } from "../../data-source";
-import { User } from "../../entities/User";
-
-interface IUserRequest {
-  email: string;
-  password: string;
-}
-
-const secret = process.env.JWT as string;
+import { User as UserTable } from "../../entities/User";
+import { UserRequest, UserResponse } from "./types";
 
 class AuthenticateUserService {
-  async execute({ email, password }: IUserRequest) {
-    const userRepo = AppDataSource.getRepository(User);
+  async execute({ email, password }: UserRequest) {
+    const userRepo = AppDataSource.getRepository(UserTable);
     const user = await userRepo.findOne({ where: { email } });
 
     if (!user) {
@@ -24,7 +18,10 @@ class AuthenticateUserService {
       };
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = await bcrypt.compare(
+      password as string,
+      user.password
+    );
 
     if (!isValidPassword) {
       throw {
@@ -33,11 +30,19 @@ class AuthenticateUserService {
       };
     }
 
-    const token = jwt.sign({ id: user.id }, secret, { expiresIn: "1d" });
+    const token = jwt.sign({ id: user.id }, process.env.JWT as string, {
+      expiresIn: "1d",
+    });
 
-    //TODO: exclude use.password from request
+    const userResponse: UserResponse = {
+      id: user.id,
+      name: user.name,
+      admin: user.admin,
+      is_active: user.is_active,
+      email: email,
+    };
 
-    return { user, token };
+    return { user: userResponse, token };
   }
 }
 

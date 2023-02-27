@@ -1,13 +1,10 @@
 import { AppDataSource } from "../../data-source";
-import { User } from "../../entities/User";
-
-interface IUserRequest {
-  id?: string;
-}
+import { User as UserTable } from "../../entities/User";
+import { UserId } from "./types";
 
 class DeleteUserService {
-  async execute({ id }: IUserRequest) {
-    const userRepo = AppDataSource.getRepository(User);
+  async execute({ id }: UserId) {
+    const userRepo = AppDataSource.getRepository(UserTable);
     const userId = await userRepo.findOne({ where: { id } });
 
     if (!userId) {

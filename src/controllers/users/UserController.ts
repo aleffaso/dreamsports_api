@@ -7,16 +7,6 @@ import { UpdateUserService } from "../../service/users/UpdateUserService";
 import { DeleteUserService } from "../../service/users/DeleteUserService";
 import { AuthenticateUserService } from "../../service/users/AuthenticateUserService";
 
-interface IUserRequest {
-  user: {
-    id?: string;
-    name?: string;
-    email?: string;
-    admin?: boolean;
-    password?: string;
-  };
-}
-
 class UserController {
   async authenticate(req: Request, res: Response) {
     const { email, password } = req.body;
@@ -27,10 +17,6 @@ class UserController {
         email,
         password,
       });
-
-      const { user } = authenticate as IUserRequest;
-
-      delete user.password;
 
       return res.json(authenticate);
     } catch (error) {
@@ -64,7 +50,7 @@ class UserController {
   }
 
   async create(req: Request, res: Response) {
-    const { name, email, admin, password } = req.body;
+    const { name, email, admin, is_active, password } = req.body;
     try {
       const createUserService = new CreateUserService();
 
@@ -73,11 +59,8 @@ class UserController {
         email,
         admin,
         password,
+        is_active,
       });
-
-      const { user } = userRequest as IUserRequest;
-
-      delete user.password;
 
       return res.json(userRequest);
     } catch (error) {
@@ -87,7 +70,7 @@ class UserController {
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, email, admin, password } = req.body;
+    const { name, email, admin, is_active, password } = req.body;
     try {
       const updateUserService = new UpdateUserService();
 
@@ -96,13 +79,9 @@ class UserController {
         name,
         email,
         admin,
+        is_active,
         password,
       });
-
-      //TODO: fix showing password
-      // const { user } = userRequest as IUserRequest;
-
-      // delete user.password;
 
       return res.json(userRequest);
     } catch (error) {

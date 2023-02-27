@@ -1,16 +1,18 @@
-import { AppDataSource } from "../../data-source";
-import { User } from "../../entities/User";
+import bcrypt from "bcryptjs";
 
-interface IUserRequest {
-  name: string;
-  email: string;
-  admin: boolean;
-  password: string;
-}
+import { AppDataSource } from "../../data-source";
+import { User as UserTable } from "../../entities/User";
+import { UserCreate, UserResponse } from "./types";
 
 class CreateUserService {
-  async execute({ name, email, admin = false, password }: IUserRequest) {
-    const userRepo = AppDataSource.getRepository(User);
+  async execute({
+    name,
+    email,
+    admin = false,
+    is_active = true,
+    password,
+  }: UserCreate) {
+    const userRepo = AppDataSource.getRepository(UserTable);
     const userAlreadyExists = await userRepo.findOne({ where: { email } });
 
     if (userAlreadyExists) {
@@ -24,12 +26,21 @@ class CreateUserService {
       name,
       email,
       admin,
-      password,
+      is_active,
+      password: bcrypt.hashSync(password as string, 8),
     });
 
     await userRepo.save(user);
 
-    return { user };
+    const userResponse: UserResponse = {
+      id: user.id,
+      name: name,
+      admin: admin,
+      is_active: is_active,
+      email: email,
+    };
+
+    return { user: userResponse };
   }
 }
 

@@ -1,11 +1,11 @@
 import { AppDataSource } from "../../data-source";
 import { instanceToPlain } from "class-transformer";
 
-import { User } from "../../entities/User";
+import { User as UserTable } from "../../entities/User";
 
 class ListUsersService {
   async execute() {
-    const userRepo = AppDataSource.getRepository(User);
+    const userRepo = AppDataSource.getRepository(UserTable);
 
     const users = await userRepo.find();
 

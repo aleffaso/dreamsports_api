@@ -1,17 +1,19 @@
-import { AppDataSource } from "../../data-source";
-import { User } from "../../entities/User";
+import bcrypt from "bcryptjs";
 
-interface IUserRequest {
-  id: string;
-  name?: string;
-  email?: string;
-  admin: boolean;
-  password?: string;
-}
+import { AppDataSource } from "../../data-source";
+import { User as UserTable } from "../../entities/User";
+import { UserUpdate, UserResponse } from "./types";
 
 class UpdateUserService {
-  async execute({ id, name, email, admin = false, password }: IUserRequest) {
-    const userRepo = AppDataSource.getRepository(User);
+  async execute({
+    id,
+    name,
+    email,
+    admin = false,
+    is_active,
+    password,
+  }: UserUpdate) {
+    const userRepo = AppDataSource.getRepository(UserTable);
     const user = await userRepo.findOne({ where: { id } });
 
     if (!user) {
@@ -21,17 +23,25 @@ class UpdateUserService {
       };
     }
 
-    const updateUser = userRepo.create({
-      ...user,
+    userRepo.update(id as string, {
       name: name,
       email: email,
       admin: admin,
-      password: password,
+      is_active: is_active,
+      password: bcrypt.hashSync(password as string, 8),
     });
 
-    await userRepo.save(updateUser);
+    await userRepo.save(user);
 
-    return { updateUser };
+    const userResponse: UserResponse = {
+      id: id,
+      name: name,
+      admin: admin,
+      is_active: is_active,
+      email: email,
+    };
+
+    return { user: userResponse };
   }
 }
 
