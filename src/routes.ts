@@ -3,8 +3,11 @@ import { Router } from "express";
 import authMiddleware from "./middlewares/authMiddleware";
 
 import UserController from "./controllers/users/UserController";
+import HealthCheckController from "./controllers/health/HealthCheckController";
 
 const router = Router();
+
+router.get("/", HealthCheckController.healthCheck);
 
 router.post("/user/authenticate", UserController.authenticate);
 router.post("/user", authMiddleware, UserController.create);
