@@ -7,7 +7,7 @@ import { UpdateUserService } from "../../service/users/UpdateUserService";
 import { DeleteUserService } from "../../service/users/DeleteUserService";
 import { AuthenticateUserService } from "../../service/users/AuthenticateUserService";
 
-class UserController {
+export default new (class UserController {
   async authenticate(req: Request, res: Response) {
     const { email, password } = req.body;
     try {
@@ -105,6 +105,4 @@ class UserController {
       res.json({ error: error });
     }
   }
-}
-
-export default new UserController();
+})();

@@ -9,7 +9,7 @@ import {
 import { v4 as uuid } from "uuid"; //generate random id
 
 @Entity("users")
-class User {
+export class User {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
@@ -41,5 +41,3 @@ class User {
     }
   }
 }
-
-export { User };

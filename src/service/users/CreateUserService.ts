@@ -4,7 +4,7 @@ import { AppDataSource } from "../../data-source";
 import { User as UserTable } from "../../entities/User";
 import { UserCreate, UserResponse } from "./types";
 
-class CreateUserService {
+export class CreateUserService {
   async execute({
     name,
     email,
@@ -43,5 +43,3 @@ class CreateUserService {
     return { user: userResponse };
   }
 }
-
-export { CreateUserService };

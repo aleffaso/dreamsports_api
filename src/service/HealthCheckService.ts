@@ -1,6 +1,6 @@
 import { AppDataSource } from "../data-source";
 
-class HealthCheckService {
+export class HealthCheckService {
   async execute() {
     const repo = AppDataSource.isInitialized;
 
@@ -14,5 +14,3 @@ class HealthCheckService {
     return { status: 200, message: "Ok" };
   }
 }
-
-export { HealthCheckService };

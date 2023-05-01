@@ -3,7 +3,7 @@ import { AppDataSource } from "../../data-source";
 import { User as UserTable } from "../../entities/User";
 import { UserId, UserResponse } from "./types";
 
-class GetUserService {
+export class GetUserService {
   async execute({ id }: UserId) {
     const userRepo = AppDataSource.getRepository(UserTable);
 
@@ -27,5 +27,3 @@ class GetUserService {
     return { user: userResponse };
   }
 }
-
-export { GetUserService };

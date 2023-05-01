@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { User as UserTable } from "../../entities/User";
 import { UserId } from "./types";
 
-class DeleteUserService {
+export class DeleteUserService {
   async execute({ id }: UserId) {
     const userRepo = AppDataSource.getRepository(UserTable);
     const userId = await userRepo.findOne({ where: { id } });
@@ -19,5 +19,3 @@ class DeleteUserService {
     });
   }
 }
-
-export { DeleteUserService };

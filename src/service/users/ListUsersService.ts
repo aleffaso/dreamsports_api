@@ -3,7 +3,7 @@ import { instanceToPlain } from "class-transformer";
 
 import { User as UserTable } from "../../entities/User";
 
-class ListUsersService {
+export class ListUsersService {
   async execute() {
     const userRepo = AppDataSource.getRepository(UserTable);
 
@@ -12,5 +12,3 @@ class ListUsersService {
     return instanceToPlain(users);
   }
 }
-
-export { ListUsersService };
