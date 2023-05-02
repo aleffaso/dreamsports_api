@@ -1,4 +1,4 @@
-export type ProductSizes = {
+export type Sizes = {
   id: number;
   title?: string;
 }[];

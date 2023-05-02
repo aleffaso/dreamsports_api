@@ -16,21 +16,22 @@ export class CreateCategoryService {
       };
     }
 
-    const user = categoryRepo.create({
+    const category = categoryRepo.create({
       href,
       src,
       title,
     });
 
-    await categoryRepo.save(user);
+    await categoryRepo.save(category);
 
     const categoryResponse: Category = {
-      id: user.id,
+      id: category.id,
       href: href,
       src: src,
       title: title,
+      slug: category.slug,
     };
 
-    return { user: categoryResponse };
+    return { category: categoryResponse };
   }
 }

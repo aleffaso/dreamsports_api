@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Product } from "./Product";
 
 @Entity("images")
@@ -15,6 +15,6 @@ export class Image {
   @Column({ nullable: false, default: false })
   main: boolean;
 
-  @ManyToOne(() => Product, (product) => product.images)
+  @ManyToMany(() => Product, (product) => product.images)
   product: Product;
 }

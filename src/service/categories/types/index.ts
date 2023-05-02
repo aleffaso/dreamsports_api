@@ -6,4 +6,8 @@ export type Category = {
   slug?: string;
 };
 
-export type CategoryCreate = Category;
+export type CategoryCreate = {
+  href: Category["href"];
+  src: Category["src"];
+  title: Category["title"];
+};

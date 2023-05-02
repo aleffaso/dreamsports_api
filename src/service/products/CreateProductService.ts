@@ -1,102 +1,81 @@
 import { AppDataSource } from "../../data-source";
 import { Product, ProductCreate } from "./types";
 import { Product as ProductTable } from "../../entities/Product";
-import { Color } from "../../entities/Color";
 import { Category } from "../../entities/Category";
+import { Brand } from "../../entities/Brand";
+import { Color } from "../../entities/Color";
 import { Size } from "../../entities/Size";
-import { Image } from "../../entities/Images";
+import { Image } from "../../entities/Image";
 
 export class CreateProductService {
   async execute({
     title,
     rate,
     price,
-    brand,
     info,
     description,
     specifications,
     inventory,
-    slug,
     is_active = true,
     categories,
+    brands,
     colors,
     sizes,
     images,
   }: ProductCreate) {
     const productRepo = AppDataSource.getRepository(ProductTable);
-    const categoriesRepo = AppDataSource.getRepository(Category);
-    const colorsRepo = AppDataSource.getRepository(Color);
-    const sizesRepo = AppDataSource.getRepository(Size);
-    const imagesRepo = AppDataSource.getRepository(Image);
+    const categoryRepo = AppDataSource.getRepository(Category);
+    const brandRepo = AppDataSource.getRepository(Brand);
+    const colorRepo = AppDataSource.getRepository(Color);
+    const sizeRepo = AppDataSource.getRepository(Size);
+    const imageRepo = AppDataSource.getRepository(Image);
 
-    const categoryValues = [];
-    const colorValues = [];
-    const sizeValues = [];
-    const imageValues = [];
+    const categoryIds = categories?.map((category) => category.id);
+    // const brandIds = brands?.map((brand) => brand.id);
+    // const colorIds = colors?.map((color) => color.id);
+    // const sizeIds = sizes?.map((size) => size.id);
+    // const imageIds = images?.map((image) => image.id);
 
-    // const productAlreadyExists = await productRepo.findOne({
-    //   where: { title },
-    // });
+    const categoryRows = await categoryRepo
+      .createQueryBuilder("categories")
+      .whereInIds(categoryIds)
+      .getMany();
 
-    // if (productAlreadyExists) {
-    //   throw {
-    //     status: 409,
-    //     message: "Product already exists",
-    //   };
-    // }
+    const product = productRepo.create({
+      title,
+      rate,
+      price,
+      info,
+      description,
+      specifications,
+      inventory,
+      is_active,
+      categories,
+      // brands,
+      // colors,
+      // sizes,
+      // images,
+    });
 
-    // const categoryArray = categories?.map((value) => {
-    //   return categoryValues.push(value.id);
-    // });
+    await productRepo.save(product);
 
-    // const colorArray = categories?.map((value) => {
-    //   return colorValues.push(value.id);
-    // });
+    const productCreateResponse: Product = {
+      id: product.id,
+      title: title,
+      rate: rate,
+      price: price,
+      info: info,
+      description: description,
+      specifications: specifications,
+      inventory: inventory,
+      slug: product.slug,
+      categories: categoryRows,
+      // brands: brandRows,
+      // colors: colorRows,
+      // sizes: sizeRows,
+      // images: imageRow,
+    };
 
-    // const sizeArray = categories?.map((value) => {
-    //   return sizeValues.push(value.id);
-    // });
-
-    // const imageArray = categories?.map((value) => {
-    //   return imageValues.push(value.id);
-    // });
-
-    // const product = productRepo.create({
-    //   title,
-    //   rate,
-    //   price,
-    //   brand,
-    //   info,
-    //   description,
-    //   specifications,
-    //   inventory,
-    //   slug,
-    //   is_active,
-    //   categoryValues,
-    //   colorArray,
-    //   sizeArray,
-    //   imageArray,
-    // });
-
-    // await productRepo.save(product);
-
-    // const productResponse: Product = {
-    //   id: product.id,
-    //   title: title,
-    //   rate: rate,
-    //   price: price,
-    //   brand: brand,
-    //   info: info,
-    //   description: description,
-    //   specifications: specifications,
-    //   inventory: inventory,
-    //   slug: slug,
-    //   categories: categories,
-    //   colors: colors,
-    //   sizes: sizes,
-    //   images: images,
-    // };
-
-    return { product: categories };
+    return { product: productCreateResponse };
   }
 }

@@ -4,13 +4,15 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  OneToMany,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Category } from "./Category";
 import { Color } from "./Color";
 import { Size } from "./Size";
-import { Image } from "./Images";
+import { Image } from "./Image";
+import { Brand } from "./Brand";
 import { v4 as uuid } from "uuid";
 
 @Entity("products")
@@ -26,9 +28,6 @@ export class Product {
 
   @Column({ nullable: false })
   price: number;
-
-  @Column({ nullable: false })
-  brand: string;
 
   @Column({ nullable: false })
   info: string;
@@ -48,16 +47,24 @@ export class Product {
   @Column({ nullable: false, default: true })
   is_active: boolean;
 
-  @OneToMany(() => Category, (category) => category.product)
+  @ManyToMany(() => Category, (category) => category.products)
+  @JoinTable()
   categories: Category[];
 
-  @OneToMany(() => Color, (color) => color.product)
+  @ManyToMany(() => Brand, (brand) => brand.product)
+  @JoinTable()
+  brands: Brand[];
+
+  @ManyToMany(() => Color, (color) => color.product)
+  @JoinTable()
   colors: Color[];
 
-  @OneToMany(() => Size, (size) => size.product)
+  @ManyToMany(() => Size, (size) => size.product)
+  @JoinTable()
   sizes: Size[];
 
-  @OneToMany(() => Image, (image) => image.product)
+  @ManyToMany(() => Image, (image) => image.product)
+  @JoinTable()
   images: Image[];
 
   @BeforeInsert()

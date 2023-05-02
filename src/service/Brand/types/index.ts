@@ -1,4 +1,4 @@
-export type Colors = {
+export type Brand = {
   id: number;
   title?: string;
 }[];

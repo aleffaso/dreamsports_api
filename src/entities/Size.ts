@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Product } from "./Product";
 
 @Entity("sizes")
@@ -9,6 +9,6 @@ export class Size {
   @Column({ nullable: false })
   title: string;
 
-  @ManyToOne(() => Product, (product) => product.colors)
+  @ManyToMany(() => Product, (product) => product.colors)
   product: Product;
 }

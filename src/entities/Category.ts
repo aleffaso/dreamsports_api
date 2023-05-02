@@ -3,7 +3,7 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  ManyToOne,
+  ManyToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Product } from "./Product";
@@ -26,8 +26,8 @@ export class Category {
   @Column({ nullable: false })
   slug: string;
 
-  @ManyToOne(() => Product, (product) => product.categories)
-  product: Product;
+  @ManyToMany(() => Product, (product) => product.categories)
+  products: Product;
 
   @BeforeInsert()
   @BeforeUpdate()
