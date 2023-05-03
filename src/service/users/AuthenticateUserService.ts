@@ -12,10 +12,7 @@ class AuthenticateUserService {
     const user = await userRepo.findOne({ where: { email } });
 
     if (!user) {
-      throw {
-        status: 401,
-        message: "E-mail incorrect",
-      };
+      throw new DoesNotExistError("E-mail does not exist");
     }
 
     const isValidPassword = await bcrypt.compare(
@@ -24,10 +21,7 @@ class AuthenticateUserService {
     );
 
     if (!isValidPassword) {
-      throw {
-        status: 401,
-        message: "Password incorrect",
-      };
+      throw new DoesNotExistError("Password does not match");
     }
 
     const token = jwt.sign({ id: user.id }, process.env.JWT as string, {

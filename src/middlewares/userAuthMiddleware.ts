@@ -1,15 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { TokenPayload } from "./types";
 
 import "dotenv/config";
 
-type TokenPayload = {
-  id: string;
-  iat: number;
-  exp: number;
-};
-
-export default function authMiddleware(
+export default function useruserAuthMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
@@ -21,7 +16,10 @@ export default function authMiddleware(
   const token = authorization.replace("Bearer", "").trim();
 
   try {
-    const { id } = jwt.verify(token, process.env.JWT as string) as TokenPayload;
+    const { id } = jwt.verify(
+      token,
+      process.env.JWT_USER as string
+    ) as TokenPayload;
 
     req.userId = id;
 

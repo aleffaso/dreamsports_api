@@ -1,13 +1,13 @@
 import { Router } from "express";
 import ImageController from "../../controllers/images/ImageController";
-import authMiddleware from "../../middlewares/authMiddleware";
+import userAuthMiddleware from "../../middlewares/userAuthMiddleware";
 
 const imageRouter = Router();
 
-imageRouter.post("/image", authMiddleware, ImageController.create);
-imageRouter.put("/image/:id", authMiddleware, ImageController.update);
+imageRouter.post("/image", userAuthMiddleware, ImageController.create);
+imageRouter.put("/image/:id", userAuthMiddleware, ImageController.update);
 imageRouter.get("/image/:id", ImageController.get);
-imageRouter.delete("/image/:id", authMiddleware, ImageController.delete);
-imageRouter.get("/images", authMiddleware, ImageController.list);
+imageRouter.delete("/image/:id", userAuthMiddleware, ImageController.delete);
+imageRouter.get("/images", userAuthMiddleware, ImageController.list);
 
 export default imageRouter;

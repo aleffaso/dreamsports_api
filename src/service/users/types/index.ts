@@ -25,13 +25,7 @@ export type UserRequest = {
   password: UserPassword["password"];
 };
 
-export type UserResponse = {
-  id: User["id"];
-  name: User["name"];
-  email: User["email"];
-  admin: User["admin"];
-  is_active: User["is_active"];
-};
+export type UserResponse = User;
 
 export type UserId = {
   id: User["id"];

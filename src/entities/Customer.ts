@@ -24,6 +24,9 @@ export class Customer {
   @Column({ nullable: true })
   fullName: string;
 
+  @Column({ nullable: true })
+  phoneNumber: number;
+
   @Column({ nullable: false })
   email: string;
 

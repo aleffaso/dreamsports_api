@@ -1,13 +1,13 @@
 import { Router } from "express";
 import ColorController from "../../controllers/colors/ColorController";
-import authMiddleware from "../../middlewares/authMiddleware";
+import userAuthMiddleware from "../../middlewares/userAuthMiddleware";
 
 const colorRouter = Router();
 
-colorRouter.post("/color", authMiddleware, ColorController.create);
-colorRouter.put("/color/:id", authMiddleware, ColorController.update);
+colorRouter.post("/color", userAuthMiddleware, ColorController.create);
+colorRouter.put("/color/:id", userAuthMiddleware, ColorController.update);
 colorRouter.get("/color/:id", ColorController.get);
-colorRouter.delete("/color/:id", authMiddleware, ColorController.delete);
+colorRouter.delete("/color/:id", userAuthMiddleware, ColorController.delete);
 colorRouter.get("/colors", ColorController.list);
 
 export default colorRouter;
