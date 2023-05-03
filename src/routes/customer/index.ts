@@ -5,23 +5,23 @@ import UserAuthMiddleware from "../../middlewares/userAuthMiddleware";
 
 const CustomerRouter = Router();
 
-CustomerRouter.post("/Customer/authenticate", CustomerController.authenticate);
-CustomerRouter.post("/Customer", CustomerController.create);
+CustomerRouter.post("/customer/authenticate", CustomerController.authenticate);
+CustomerRouter.post("/customer", CustomerController.create);
 CustomerRouter.put(
-  "/Customer/:id",
+  "/customer/:id",
   CustomerAuthMiddleware,
   CustomerController.update
 );
 CustomerRouter.get(
-  "/Customer/:id",
+  "/customer/:id",
   CustomerAuthMiddleware,
   CustomerController.get
 );
 CustomerRouter.delete(
-  "/Customer/:id",
+  "/customer/:id",
   CustomerAuthMiddleware,
   CustomerController.delete
 );
-CustomerRouter.get("/Customers", UserAuthMiddleware, CustomerController.list);
+CustomerRouter.get("/customers", UserAuthMiddleware, CustomerController.list);
 
 export default CustomerRouter;

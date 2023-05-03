@@ -5,14 +5,10 @@ import userAuthMiddleware from "../../middlewares/userAuthMiddleware";
 const productRouter = Router();
 
 productRouter.post("/product", userAuthMiddleware, ProductController.create);
-productRouter.put(
-  "/category/:id",
-  userAuthMiddleware,
-  ProductController.update
-);
-productRouter.get("/category/:id", ProductController.get);
+productRouter.put("/product/:id", userAuthMiddleware, ProductController.update);
+productRouter.get("/product/:id", ProductController.get);
 productRouter.delete(
-  "/category/:id",
+  "/product/:id",
   userAuthMiddleware,
   ProductController.delete
 );
