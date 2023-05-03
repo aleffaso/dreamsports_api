@@ -24,6 +24,25 @@ export default new (class UserController {
     }
   }
 
+  async create(req: Request, res: Response) {
+    const { name, email, admin, is_active, password } = req.body;
+    try {
+      const createUserService = new CreateUserService();
+
+      const userRequest = await createUserService.execute({
+        name,
+        email,
+        admin,
+        password,
+        is_active,
+      });
+
+      return res.json(userRequest);
+    } catch (error) {
+      res.json({ error: error });
+    }
+  }
+
   async list(req: Request, res: Response) {
     try {
       const listUsersService = new ListUsersService();
@@ -44,25 +63,6 @@ export default new (class UserController {
       const user = await getUserService.execute({ id });
 
       return res.json(user);
-    } catch (error) {
-      res.json({ error: error });
-    }
-  }
-
-  async create(req: Request, res: Response) {
-    const { name, email, admin, is_active, password } = req.body;
-    try {
-      const createUserService = new CreateUserService();
-
-      const userRequest = await createUserService.execute({
-        name,
-        email,
-        admin,
-        password,
-        is_active,
-      });
-
-      return res.json(userRequest);
     } catch (error) {
       res.json({ error: error });
     }
@@ -92,9 +92,9 @@ export default new (class UserController {
   async delete(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const deleteUsersService = new DeleteUserService();
+      const deleteUserService = new DeleteUserService();
 
-      await deleteUsersService.execute({
+      await deleteUserService.execute({
         id,
       });
 

@@ -11,3 +11,11 @@ export type CategoryCreate = {
   src: Category["src"];
   title: Category["title"];
 };
+
+export type CategoryUpdate = Category;
+
+export type CategoryResponse = Category;
+
+export type CategoryId = {
+  id: Category["id"];
+};

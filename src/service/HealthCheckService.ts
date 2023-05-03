@@ -5,10 +5,7 @@ export class HealthCheckService {
     const repo = AppDataSource.isInitialized;
 
     if (!repo) {
-      throw {
-        status: 503,
-        message: "Service Unavailable",
-      };
+      throw new ServiceUnavailableError("Service Unavailable");
     }
 
     return { status: 200, message: "Ok" };

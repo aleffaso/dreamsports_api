@@ -1,5 +1,7 @@
 import { Exclude } from "class-transformer";
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -56,10 +58,15 @@ export class Customer {
   @UpdateDateColumn()
   updated_at: Date;
 
+  @BeforeInsert()
+  @BeforeUpdate()
+  generateFullName() {
+    this.fullName = this.firstName + " " + this.lastName;
+  }
+
   constructor() {
     if (!this.id) {
       this.id = uuid();
     }
-    this.fullName = this.firstName + " " + this.lastName;
   }
 }

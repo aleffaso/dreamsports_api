@@ -2,9 +2,11 @@ import {
   BeforeInsert,
   BeforeUpdate,
   Column,
+  CreateDateColumn,
   Entity,
   ManyToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Product } from "./Product";
 import slugify from "slugify";
@@ -25,6 +27,12 @@ export class Category {
 
   @Column({ nullable: false })
   slug: string;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 
   @ManyToMany(() => Product, (product) => product.categories)
   products: Product;

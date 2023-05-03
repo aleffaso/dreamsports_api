@@ -3,10 +3,12 @@ import {
   BeforeInsert,
   BeforeUpdate,
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Category } from "./Category";
 import { Color } from "./Color";
@@ -46,6 +48,12 @@ export class Product {
 
   @Column({ nullable: false, default: true })
   is_active: boolean;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 
   @ManyToMany(() => Category, (category) => category.products)
   @JoinTable()

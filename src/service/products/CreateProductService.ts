@@ -31,14 +31,34 @@ export class CreateProductService {
     const imageRepo = AppDataSource.getRepository(Image);
 
     const categoryIds = categories?.map((category) => category.id);
-    // const brandIds = brands?.map((brand) => brand.id);
-    // const colorIds = colors?.map((color) => color.id);
-    // const sizeIds = sizes?.map((size) => size.id);
-    // const imageIds = images?.map((image) => image.id);
+    const brandIds = brands?.map((brand) => brand.id);
+    const colorIds = colors?.map((color) => color.id);
+    const sizeIds = sizes?.map((size) => size.id);
+    const imageIds = images?.map((image) => image.id);
 
     const categoryRows = await categoryRepo
       .createQueryBuilder("categories")
       .whereInIds(categoryIds)
+      .getMany();
+
+    const brandRows = await brandRepo
+      .createQueryBuilder("brands")
+      .whereInIds(brandIds)
+      .getMany();
+
+    const colorRows = await colorRepo
+      .createQueryBuilder("colors")
+      .whereInIds(colorIds)
+      .getMany();
+
+    const sizeRows = await sizeRepo
+      .createQueryBuilder("sizes")
+      .whereInIds(sizeIds)
+      .getMany();
+
+    const imageRows = await imageRepo
+      .createQueryBuilder("images")
+      .whereInIds(imageIds)
       .getMany();
 
     const product = productRepo.create({
@@ -51,10 +71,10 @@ export class CreateProductService {
       inventory,
       is_active,
       categories,
-      // brands,
-      // colors,
-      // sizes,
-      // images,
+      brands,
+      colors,
+      sizes,
+      images,
     });
 
     await productRepo.save(product);
@@ -70,10 +90,10 @@ export class CreateProductService {
       inventory: inventory,
       slug: product.slug,
       categories: categoryRows,
-      // brands: brandRows,
-      // colors: colorRows,
-      // sizes: sizeRows,
-      // images: imageRow,
+      brands: brandRows,
+      colors: colorRows,
+      sizes: sizeRows,
+      images: imageRows,
     };
 
     return { product: productCreateResponse };

@@ -1,8 +1,8 @@
-import { Brand } from "../../Brand/types";
+import { Brand } from "../../brands/types";
 import { Category } from "../../categories/types";
-import { Colors } from "../../colors/types";
-import { Images } from "../../images/types";
-import { Sizes } from "../../sizes/types";
+import { Color } from "../../colors/types";
+import { Image } from "../../images/types";
+import { Size } from "../../sizes/types";
 
 export type Product = {
   id?: string;
@@ -16,10 +16,10 @@ export type Product = {
   slug?: string;
   is_active?: boolean;
   categories?: Category[];
-  brand?: Brand[];
-  colors?: Colors[];
-  sizes?: Sizes[];
-  images?: Images[];
+  brands?: Brand[];
+  colors?: Color[];
+  sizes?: Size[];
+  images?: Image[];
 };
 
 export type ProductCreate = {
@@ -32,8 +32,16 @@ export type ProductCreate = {
   inventory: Product["inventory"];
   is_active: Product["is_active"];
   categories: Product["categories"];
-  brands: Product["brand"];
+  brands: Product["brands"];
   colors: Product["colors"];
   sizes: Product["sizes"];
   images: Product["images"];
+};
+
+export type ProductResponse = Product;
+
+export type ProductUpdate = Product;
+
+export type ProductId = {
+  id: Product["id"];
 };

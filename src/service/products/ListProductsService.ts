@@ -6,7 +6,9 @@ import { Product as ProductTable } from "../../entities/Product";
 export class ListProductsService {
   async execute() {
     const productRepo = AppDataSource.getRepository(ProductTable);
-    const products = await productRepo.find({ relations: ["categories"] });
+    const products = await productRepo.find({
+      relations: ["brands", "categories", "colors", "images", "sizes"],
+    });
 
     return instanceToPlain(products);
   }
