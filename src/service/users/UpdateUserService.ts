@@ -17,10 +17,7 @@ export class UpdateUserService {
     const user = await userRepo.findOne({ where: { id } });
 
     if (!user) {
-      throw {
-        status: 401,
-        message: "User does not exist",
-      };
+      throw new DoesNotExistError("User does not exist");
     }
 
     userRepo.update(id as string, {

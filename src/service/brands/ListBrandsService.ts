@@ -1,14 +1,14 @@
 import { AppDataSource } from "../../data-source";
 import { instanceToPlain } from "class-transformer";
 
-import { Category as CategoryTable } from "../../entities/Category";
+import { Brand as BrandTable } from "../../entities/Brand";
 
 export class ListBrandsService {
   async execute() {
-    const categoryRepo = AppDataSource.getRepository(CategoryTable);
+    const brandRepo = AppDataSource.getRepository(BrandTable);
 
-    const categories = await categoryRepo.find();
+    const brands = await brandRepo.find();
 
-    return instanceToPlain(categories);
+    return instanceToPlain(brands);
   }
 }

@@ -10,10 +10,7 @@ export class CreateCategoryService {
     });
 
     if (categoryAlreadyExists) {
-      throw {
-        status: 409,
-        message: "Category already exists",
-      };
+      throw new AlreadyExistsError("Category already exists");
     }
 
     const category = categoryRepo.create({

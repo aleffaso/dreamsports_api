@@ -10,10 +10,7 @@ export class CreateBrandService {
     });
 
     if (brandAlreadyExists) {
-      throw {
-        status: 409,
-        message: "Brand already exists",
-      };
+      throw new AlreadyExistsError("Brand already exists");
     }
 
     const brand = brandRepo.create({

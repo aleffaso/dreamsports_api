@@ -10,10 +10,7 @@ export class GetCategoryService {
     const category = await categoryRepo.findOne({ where: { id } });
 
     if (!category) {
-      throw {
-        status: 401,
-        message: "Category does not exist",
-      };
+      throw new DoesNotExistError("Category does not exist");
     }
 
     const categoryResponse: CategoryResponse = {

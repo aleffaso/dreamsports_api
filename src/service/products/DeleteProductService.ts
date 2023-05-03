@@ -8,10 +8,7 @@ export class DeleteProductService {
     const productId = await productRepo.findOne({ where: { id } });
 
     if (!productId) {
-      throw {
-        status: 401,
-        message: "Product does not exist",
-      };
+      throw new DoesNotExistError("Product does not exist");
     }
 
     return await productRepo.delete({

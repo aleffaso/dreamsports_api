@@ -1,9 +1,9 @@
-class ServiceUnavailableError extends Error {
+class DoesNotExistError extends Error {
   constructor({ message }: any) {
     super(message);
-    this.name = "ServiceUnavailableError";
+    this.name = "DoesNotExistError";
   }
   get status() {
-    return 503;
+    return 401;
   }
 }

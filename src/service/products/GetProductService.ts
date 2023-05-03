@@ -18,17 +18,11 @@ export class GetProductService {
     });
 
     if (!product) {
-      throw {
-        status: 401,
-        message: "Product does not exist",
-      };
+      throw new DoesNotExistError("Product does not exist");
     }
 
     if (!product.is_active) {
-      throw {
-        status: 403,
-        message: "Product is not active",
-      };
+      throw new ForbiddenError("Product forbidden");
     }
 
     const productResponse: ProductResponse = {

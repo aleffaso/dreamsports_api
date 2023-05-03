@@ -16,10 +16,7 @@ export class CreateUserService {
     const userAlreadyExists = await userRepo.findOne({ where: { email } });
 
     if (userAlreadyExists) {
-      throw {
-        status: 409,
-        message: "User already exists",
-      };
+      throw new AlreadyExistsError("User already exists");
     }
 
     const user = userRepo.create({

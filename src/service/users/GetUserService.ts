@@ -10,10 +10,7 @@ export class GetUserService {
     const user = await userRepo.findOne({ where: { id } });
 
     if (!user) {
-      throw {
-        status: 401,
-        message: "User does not exist",
-      };
+      throw new DoesNotExistError("User does not exist");
     }
 
     const userResponse: UserResponse = {

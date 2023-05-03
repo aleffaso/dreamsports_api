@@ -8,10 +8,7 @@ export class DeleteCategoryService {
     const categoryId = await categoryRepo.findOne({ where: { id } });
 
     if (!categoryId) {
-      throw {
-        status: 401,
-        message: "Category does not exist",
-      };
+      throw new DoesNotExistError("Category does not exist");
     }
 
     return await categoryRepo.delete({

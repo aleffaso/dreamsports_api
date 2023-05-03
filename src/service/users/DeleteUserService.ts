@@ -8,10 +8,7 @@ export class DeleteUserService {
     const userId = await userRepo.findOne({ where: { id } });
 
     if (!userId) {
-      throw {
-        status: 401,
-        message: "User does not exist",
-      };
+      throw new DoesNotExistError("User does not exist");
     }
 
     return await userRepo.delete({

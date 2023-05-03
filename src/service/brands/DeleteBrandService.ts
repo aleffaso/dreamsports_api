@@ -8,10 +8,7 @@ export class DeleteBrandService {
     const brandId = await brandRepo.findOne({ where: { id } });
 
     if (!brandId) {
-      throw {
-        status: 401,
-        message: "Brand does not exist",
-      };
+      throw new DoesNotExistError("Brand does not exist");
     }
 
     return await brandRepo.delete({

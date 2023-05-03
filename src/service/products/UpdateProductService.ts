@@ -24,17 +24,11 @@ export class UpdateProductService {
     const product = await productRepo.findOne({ where: { id } });
 
     if (!product) {
-      throw {
-        status: 401,
-        message: "Product does not exist",
-      };
+      throw new DoesNotExistError("Product does not exist");
     }
 
     if (title === product.title) {
-      throw {
-        status: 409,
-        message: "Product already exists",
-      };
+      throw new AlreadyExistsError("Product already exists");
     }
 
     const updatedSlug = slugify(title as string, { lower: true });
