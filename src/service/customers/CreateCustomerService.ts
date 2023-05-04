@@ -47,7 +47,7 @@ export class CreateCustomerService {
 
     const customerResponse: CustomerResponse = {
       id: customer.id,
-      fullName: firstName + " " + lastName,
+      fullName: `${firstName} ${lastName}`,
       email: email,
       phoneNumber: phoneNumber,
       zipCode: zipCode,

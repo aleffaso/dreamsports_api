@@ -15,9 +15,8 @@ export class GetCustomerService {
 
     const customerResponse: CustomerResponse = {
       id: id,
-      fullName: customer.fullName,
       email: customer.email,
-      lastName: customer.lastName,
+      fullName: `${customer.firstName} ${customer.lastName}`,
       phoneNumber: customer.phoneNumber,
       zipCode: customer.zipCode,
       streetAddress: customer.streetAddress,

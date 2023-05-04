@@ -1,10 +1,10 @@
-import "dotenv/config";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import { AppDataSource } from "../../data-source";
 import { Customer as CustomerTable } from "../../entities/Customer";
 import { CustomerRequest, CustomerResponse } from "./types";
+import { KEYS } from "../../constants";
 
 class AuthenticateCustomerService {
   async execute({ email, password }: CustomerRequest) {
@@ -24,7 +24,7 @@ class AuthenticateCustomerService {
       throw new DoesNotExistError("Password does not match");
     }
 
-    const token = jwt.sign({ id: customer.id }, process.env.JWT as string, {
+    const token = jwt.sign({ id: customer.id }, KEYS.JWT.CUSTOMER, {
       expiresIn: "1d",
     });
 

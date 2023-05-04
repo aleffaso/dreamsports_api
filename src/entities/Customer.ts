@@ -25,7 +25,7 @@ export class Customer {
   fullName: string;
 
   @Column({ nullable: true })
-  phoneNumber: number;
+  phoneNumber: string;
 
   @Column({ nullable: false })
   email: string;
@@ -64,7 +64,7 @@ export class Customer {
   @BeforeInsert()
   @BeforeUpdate()
   generateFullName() {
-    this.fullName = this.firstName + " " + this.lastName;
+    this.fullName = `${this.firstName} ${this.lastName}`;
   }
 
   constructor() {

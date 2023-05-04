@@ -1,10 +1,10 @@
-import "dotenv/config";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import { AppDataSource } from "../../data-source";
 import { User as UserTable } from "../../entities/User";
 import { UserRequest, UserResponse } from "./types";
+import { KEYS } from "../../constants";
 
 class AuthenticateUserService {
   async execute({ email, password }: UserRequest) {
@@ -24,7 +24,7 @@ class AuthenticateUserService {
       throw new DoesNotExistError("Password does not match");
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT as string, {
+    const token = jwt.sign({ id: user.id }, KEYS.JWT.USER, {
       expiresIn: "1d",
     });
 
