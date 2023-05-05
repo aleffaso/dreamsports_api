@@ -18,7 +18,7 @@ services:
       - ./:/app/
       - /app/node_modules
     ports:
-      - "80:80"
+      - "8000:80"
     command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm run migration:generate; npm run migration:run; npm run dev'
     env_file:
       - .env

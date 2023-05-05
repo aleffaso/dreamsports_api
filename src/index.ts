@@ -13,8 +13,10 @@ import sizeRouter from "./routes/size";
 import imageRouter from "./routes/image";
 import CustomerRouter from "./routes/customer";
 import { KEYS } from "./constants";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 app.use(routes);
