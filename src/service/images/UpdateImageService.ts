@@ -2,6 +2,7 @@ import slugify from "slugify";
 import { AppDataSource } from "../../data-source";
 import { Image as ImageTable } from "../../entities/Image";
 import { ImageUpdate, ImageResponse } from "./types";
+import { AlreadyExistsError, DoesNotExistError } from "../../errors";
 
 export class UpdateImageService {
   async execute({ id, src, title, main }: ImageUpdate) {

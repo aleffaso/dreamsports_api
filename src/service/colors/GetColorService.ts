@@ -1,6 +1,7 @@
 import { AppDataSource } from "../../data-source";
 
 import { Color as ColorTable } from "../../entities/Color";
+import { DoesNotExistError } from "../../errors";
 import { ColorId, ColorResponse } from "./types";
 
 export class GetColorService {

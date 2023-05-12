@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Image as ImageTable } from "../../entities/Image";
+import { AlreadyExistsError } from "../../errors";
 import { Image, ImageCreate } from "./types";
 
 export class CreateImageService {

@@ -1,6 +1,7 @@
 import { AppDataSource } from "../../data-source";
 
 import { User as UserTable } from "../../entities/User";
+import { DoesNotExistError } from "../../errors";
 import { UserId, UserResponse } from "./types";
 
 export class GetUserService {

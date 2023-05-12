@@ -32,22 +32,23 @@ The main purpose of this project is to create an e-commerce to a cliente about b
 
 ## Setting enviroment keys
 
-Add `.env` file into main folder, and put:
+Rename `.env_example` file as `.env` into main folder, and put your own credentials:
 
-- `POSTGRES_NAME=docker`
-- `NEW_POSTGRES_NAME=docker`
-- `POSTGRES_PASSWORD=docker`
-- `POSTGRES_USER=docker`
-- `POSTGRES_DB=docker`
+- `POSTGRES_NAME=dreamsports`
+- `NEW_POSTGRES_NAME=dreamsports`
+- `POSTGRES_PASSWORD=dreamsports`
+- `POSTGRES_USER=dreamsports`
+- `POSTGRES_DB=dreamsports`
 
-- `ORMCONFIG_DB=dreamsports`
-- `ORMCONFIG_USERNAME=dreamsports`
-- `ORMCONFIG_PASSWORD=dreamsports`
-- `ORMCONFIG_HOST=dreamsports`
-- `ORMCONFIG_PORT=5432`
+- `ORM_CONFIG_DB=dreamsports`
+- `ORM_CONFIG_USERNAME=dreamsports`
+- `ORM_CONFIG_PASSWORD=dreamsports`
+- `ORM_CONFIG_HOST=dreamsports`
+- `ORM_CONFIG_PORT=5432`
 
-- `PORT=3000`
-- `JWT=yourjwt`
+- `PORT=80`
+- `JWT_USER=dreamsports`
+- `JWT_CUSTOMER=dreamsports`
 
 <hr>
 

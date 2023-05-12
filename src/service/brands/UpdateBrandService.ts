@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Brand as BrandTable } from "../../entities/Brand";
+import { AlreadyExistsError, DoesNotExistError } from "../../errors";
 import { BrandUpdate, BrandResponse } from "./types";
 
 export class UpdateBrandService {

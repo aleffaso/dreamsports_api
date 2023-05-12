@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Category as CategoryTable } from "../../entities/Category";
+import { AlreadyExistsError } from "../../errors";
 import { Category, CategoryCreate } from "./types";
 
 export class CreateCategoryService {

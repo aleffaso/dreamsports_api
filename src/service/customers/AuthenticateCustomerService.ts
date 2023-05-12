@@ -5,6 +5,7 @@ import { AppDataSource } from "../../data-source";
 import { Customer as CustomerTable } from "../../entities/Customer";
 import { CustomerRequest, CustomerResponse } from "./types";
 import { KEYS } from "../../constants";
+import { DoesNotExistError } from "../../errors";
 
 class AuthenticateCustomerService {
   async execute({ email, password }: CustomerRequest) {

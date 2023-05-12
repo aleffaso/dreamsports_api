@@ -1,6 +1,7 @@
 import { AppDataSource } from "../../data-source";
 
 import { Category as CategoryTable } from "../../entities/Category";
+import { DoesNotExistError } from "../../errors";
 import { CategoryId, CategoryResponse } from "./types";
 
 export class GetCategoryService {

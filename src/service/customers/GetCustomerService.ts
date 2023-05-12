@@ -1,6 +1,7 @@
 import { AppDataSource } from "../../data-source";
 
 import { Customer as CustomerTable } from "../../entities/Customer";
+import { DoesNotExistError } from "../../errors";
 import { CustomerId, CustomerResponse } from "./types";
 
 export class GetCustomerService {

@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { User as UserTable } from "../../entities/User";
+import { DoesNotExistError } from "../../errors";
 import { UserId } from "./types";
 
 export class DeleteUserService {

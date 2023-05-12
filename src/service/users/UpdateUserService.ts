@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { AppDataSource } from "../../data-source";
 import { User as UserTable } from "../../entities/User";
 import { UserUpdate, UserResponse } from "./types";
+import { DoesNotExistError } from "../../errors";
 
 export class UpdateUserService {
   async execute({

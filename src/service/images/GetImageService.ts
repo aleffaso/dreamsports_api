@@ -1,6 +1,7 @@
 import { AppDataSource } from "../../data-source";
 
 import { Image as ImageTable } from "../../entities/Image";
+import { DoesNotExistError } from "../../errors";
 import { ImageId, ImageResponse } from "./types";
 
 export class GetImageService {

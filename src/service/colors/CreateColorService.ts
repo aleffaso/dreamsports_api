@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Color as ColorTable } from "../../entities/Color";
+import { AlreadyExistsError } from "../../errors";
 import { Color, ColorCreate } from "./types";
 
 export class CreateColorService {

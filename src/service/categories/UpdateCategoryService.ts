@@ -2,6 +2,7 @@ import slugify from "slugify";
 import { AppDataSource } from "../../data-source";
 import { Category as CategoryTable } from "../../entities/Category";
 import { CategoryUpdate, CategoryResponse } from "./types";
+import { AlreadyExistsError, DoesNotExistError } from "../../errors";
 
 export class UpdateCategoryService {
   async execute({ id, href, src, title }: CategoryUpdate) {

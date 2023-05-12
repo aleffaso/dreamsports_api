@@ -2,6 +2,7 @@ import slugify from "slugify";
 import { AppDataSource } from "../../data-source";
 import { Product as ProductTable } from "../../entities/Product";
 import { ProductUpdate, ProductResponse } from "./types";
+import { AlreadyExistsError, DoesNotExistError } from "../../errors";
 
 export class UpdateProductService {
   async execute({

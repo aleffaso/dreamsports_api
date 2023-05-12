@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Product as ProductTable } from "../../entities/Product";
+import { DoesNotExistError } from "../../errors";
 import { ProductId } from "./types";
 
 export class DeleteProductService {

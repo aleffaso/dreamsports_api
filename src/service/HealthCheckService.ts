@@ -1,4 +1,5 @@
 import { AppDataSource } from "../data-source";
+import { ServiceUnavailableError } from "../errors";
 
 export class HealthCheckService {
   async execute() {

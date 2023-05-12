@@ -1,6 +1,7 @@
 import { AppDataSource } from "../../data-source";
 
 import { Product as ProductTable } from "../../entities/Product";
+import { DoesNotExistError, ForbiddenError } from "../../errors";
 import { ProductId, ProductResponse } from "./types";
 
 export class GetProductService {

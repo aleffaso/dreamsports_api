@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Size as SizeTable } from "../../entities/Size";
+import { AlreadyExistsError } from "../../errors";
 import { Size, SizeCreate } from "./types";
 
 export class CreateSizeService {

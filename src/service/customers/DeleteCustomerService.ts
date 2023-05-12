@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Customer as CustomerTable } from "../../entities/Customer";
+import { DoesNotExistError } from "../../errors";
 import { CustomerId } from "./types";
 
 export class DeleteCustomerService {

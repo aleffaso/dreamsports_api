@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { AppDataSource } from "../../data-source";
 import { Customer as CustomerTable } from "../../entities/Customer";
 import { CustomerUpdate, CustomerResponse } from "./types";
+import { DoesNotExistError } from "../../errors";
 
 export class UpdateCustomerService {
   async execute({

@@ -1,6 +1,7 @@
 import { AppDataSource } from "../../data-source";
 
 import { Brand as BrandTable } from "../../entities/Brand";
+import { DoesNotExistError } from "../../errors";
 import { BrandId, BrandResponse } from "./types";
 
 export class GetBrandService {
