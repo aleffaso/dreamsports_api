@@ -30,3 +30,23 @@ export type UserResponse = User;
 export type UserId = {
   id: User["id"];
 };
+
+export type UserRefreshToken = {
+  id?: string;
+  expiresIn?: number;
+  userId?: string;
+  refresh_token?: string;
+};
+
+export type UserRefreshTokenCreate = {
+  userId: UserRefreshToken["userId"];
+  refresh_token?: UserRefreshToken["refresh_token"];
+};
+
+export type UserRefreshTokenResponse = {
+  id: UserRefreshToken["id"];
+};
+
+export type UserRefreshTokenRequest = {
+  refresh_token?: UserRefreshToken["refresh_token"];
+};

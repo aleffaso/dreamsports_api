@@ -5,15 +5,24 @@ import { SizeId } from "./types";
 
 export class DeleteSizeService {
   async execute({ id }: SizeId) {
-    const sizeRepo = AppDataSource.getRepository(SizeTable);
-    const sizeId = await sizeRepo.findOne({ where: { id } });
+    try {
+      const sizeRepo = AppDataSource.getRepository(SizeTable);
+      const sizeId = await sizeRepo.findOne({ where: { id } });
 
-    if (!sizeId) {
-      throw new DoesNotExistError("Size does not exist");
+      if (!sizeId) {
+        throw new DoesNotExistError("Size does not exist");
+      }
+
+      return await sizeRepo.delete({
+        id,
+      });
+    } catch (error) {
+      if (error instanceof DoesNotExistError) {
+        return {
+          message: error.name,
+          status_code: error.status(),
+        };
+      }
     }
-
-    return await sizeRepo.delete({
-      id,
-    });
   }
 }

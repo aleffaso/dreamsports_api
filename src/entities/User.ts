@@ -5,8 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
+  OneToMany,
+  JoinTable,
 } from "typeorm";
 import { v4 as uuid } from "uuid"; //generate random id
+import { RefreshToken } from "./RefreshToken";
 
 @Entity("users")
 export class User {
@@ -34,6 +37,10 @@ export class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user)
+  @JoinTable()
+  refresh_token: RefreshToken;
 
   constructor() {
     if (!this.id) {

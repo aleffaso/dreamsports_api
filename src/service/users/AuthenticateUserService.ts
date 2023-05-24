@@ -6,6 +6,8 @@ import { User as UserTable } from "../../entities/User";
 import { UserRequest, UserResponse } from "./types";
 import { KEYS } from "../../constants";
 import { DoesNotExistError } from "../../errors";
+import { RefreshTokenUserService } from "./RefreshTokenUserService";
+import dayjs from "dayjs";
 
 class AuthenticateUserService {
   async execute({ email, password }: UserRequest) {
@@ -14,7 +16,7 @@ class AuthenticateUserService {
       const user = await userRepo.findOne({ where: { email } });
 
       if (!user) {
-        throw new DoesNotExistError("E-mail does not exist");
+        throw new DoesNotExistError("Data does not match");
       }
 
       const isValidPassword = await bcrypt.compare(
@@ -23,12 +25,8 @@ class AuthenticateUserService {
       );
 
       if (!isValidPassword) {
-        throw new DoesNotExistError("Password does not match");
+        throw new DoesNotExistError("Data does not match");
       }
-
-      const token = jwt.sign({ id: user.id }, KEYS.JWT.USER, {
-        expiresIn: "1d",
-      });
 
       const userResponse: UserResponse = {
         id: user.id,
@@ -38,12 +36,23 @@ class AuthenticateUserService {
         email: email,
       };
 
-      return { user: userResponse, token };
+      const expiresIn = dayjs().add(KEYS.JWT.EXPIRATION_TIME, "day").unix();
+
+      const token = jwt.sign({ id: user.id }, KEYS.JWT.USER, {
+        expiresIn: expiresIn,
+      });
+
+      const refreshTokenUserService = new RefreshTokenUserService();
+      const refreshToken = await refreshTokenUserService.execute({
+        userId: user.id,
+      });
+
+      return { user: userResponse, token, refresh_token_id: refreshToken };
     } catch (error) {
       if (error instanceof DoesNotExistError) {
         return {
           message: error.name,
-          statusCode: error.status(),
+          status_code: error.status(),
         };
       }
     }

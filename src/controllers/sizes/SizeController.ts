@@ -7,11 +7,9 @@ import { DeleteSizeService } from "../../service/sizes/DeleteSizeService";
 
 export default new (class SizeController {
   async create(req: Request, res: Response) {
-    const { title } = req.body;
-
     try {
+      const { title } = req.body;
       const createSizeService = new CreateSizeService();
-
       const sizeRequest = await createSizeService.execute({
         title,
       });
@@ -35,11 +33,10 @@ export default new (class SizeController {
   }
 
   async get(req: Request, res: Response) {
-    const { id } = req.params;
-    const idNumber = parseInt(id);
     try {
+      const { id } = req.params;
+      const idNumber = parseInt(id);
       const getSizeService = new GetSizeService();
-
       const size = await getSizeService.execute({ id: idNumber });
 
       return res.json(size);
@@ -49,10 +46,10 @@ export default new (class SizeController {
   }
 
   async update(req: Request, res: Response) {
-    const { id } = req.params;
-    const { title } = req.body;
-    const idNumber = parseInt(id);
     try {
+      const { id } = req.params;
+      const { title } = req.body;
+      const idNumber = parseInt(id);
       const updateSizeService = new UpdateSizeService();
 
       const sizeRequest = await updateSizeService.execute({
@@ -67,9 +64,9 @@ export default new (class SizeController {
   }
 
   async delete(req: Request, res: Response) {
-    const { id } = req.params;
-    const idNumber = parseInt(id);
     try {
+      const { id } = req.params;
+      const idNumber = parseInt(id);
       const deleteSizeService = new DeleteSizeService();
 
       await deleteSizeService.execute({

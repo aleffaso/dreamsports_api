@@ -9,31 +9,41 @@ export class DoesNotExistError extends Error {
 }
 
 export class AlreadyExistsError extends Error {
-  constructor({ message }: any) {
+  constructor(message: string) {
     super(message);
-    this.name = "AlreadyExistsError";
+    this.name = message;
   }
-  get status() {
+  status() {
     return 409;
   }
 }
 
 export class ForbiddenError extends Error {
-  constructor({ message }: any) {
+  constructor(message: string) {
     super(message);
-    this.name = "ForbiddenError";
+    this.name = message;
   }
-  get status() {
+  status() {
     return 403;
   }
 }
 
 export class ServiceUnavailableError extends Error {
-  constructor({ message }: any) {
+  constructor(message: string) {
     super(message);
-    this.name = "ServiceUnavailableError";
+    this.name = message;
   }
-  get status() {
+  status() {
     return 503;
+  }
+}
+
+export class InvalidDataError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = message;
+  }
+  status() {
+    return 400;
   }
 }

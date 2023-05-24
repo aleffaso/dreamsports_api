@@ -18,5 +18,8 @@ export const KEYS = {
   JWT: {
     USER: (process.env.JWT_USER as string) ?? "",
     CUSTOMER: (process.env.JWT_CUSTOMER as string) ?? "",
+    EXPIRATION_TIME: Number(process.env.JWT_EXPIRATION_TIME as string) ?? 1,
+    EXPIRATION_UNIT_TIME:
+      (process.env.JWT_EXPIRATION_UNIT_TIME as string) ?? "hour", // "day" ||"hour" || "minute" ||"second"
   },
 };

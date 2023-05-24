@@ -3,12 +3,21 @@ import { ServiceUnavailableError } from "../errors";
 
 export class HealthCheckService {
   async execute() {
-    const repo = AppDataSource.isInitialized;
+    try {
+      const repo = AppDataSource.isInitialized;
 
-    if (!repo) {
-      throw new ServiceUnavailableError("Service Unavailable");
+      if (!repo) {
+        throw new ServiceUnavailableError("Service Unavailable");
+      }
+
+      return { message: "Ok", status_code: 200 };
+    } catch (error) {
+      if (error instanceof ServiceUnavailableError) {
+        return {
+          message: error.name,
+          status_code: error.status(),
+        };
+      }
     }
-
-    return { status: 200, message: "Ok" };
   }
 }

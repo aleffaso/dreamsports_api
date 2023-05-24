@@ -6,19 +6,28 @@ import { SizeId, SizeResponse } from "./types";
 
 export class GetSizeService {
   async execute({ id }: SizeId) {
-    const sizeRepo = AppDataSource.getRepository(SizeTable);
+    try {
+      const sizeRepo = AppDataSource.getRepository(SizeTable);
 
-    const size = await sizeRepo.findOne({ where: { id } });
+      const size = await sizeRepo.findOne({ where: { id } });
 
-    if (!size) {
-      throw new DoesNotExistError("Size does not exist");
+      if (!size) {
+        throw new DoesNotExistError("Size does not exist");
+      }
+
+      const sizeResponse: SizeResponse = {
+        id: size.id,
+        title: size.title,
+      };
+
+      return { Size: sizeResponse };
+    } catch (error) {
+      if (error instanceof DoesNotExistError) {
+        return {
+          message: error.name,
+          status_code: error.status(),
+        };
+      }
     }
-
-    const sizeResponse: SizeResponse = {
-      id: size.id,
-      title: size.title,
-    };
-
-    return { Size: sizeResponse };
   }
 }

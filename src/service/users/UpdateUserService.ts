@@ -14,31 +14,40 @@ export class UpdateUserService {
     is_active,
     password,
   }: UserUpdate) {
-    const userRepo = AppDataSource.getRepository(UserTable);
-    const user = await userRepo.findOne({ where: { id } });
+    try {
+      const userRepo = AppDataSource.getRepository(UserTable);
+      const user = await userRepo.findOne({ where: { id } });
 
-    if (!user) {
-      throw new DoesNotExistError("User does not exist");
+      if (!user) {
+        throw new DoesNotExistError("User does not exist");
+      }
+
+      userRepo.update(id as string, {
+        name: name,
+        email: email,
+        admin: admin,
+        is_active: is_active,
+        password: bcrypt.hashSync(password as string, 8),
+      });
+
+      await userRepo.save(user);
+
+      const userResponse: UserResponse = {
+        id: id,
+        name: name,
+        admin: admin,
+        is_active: is_active,
+        email: email,
+      };
+
+      return { user: userResponse };
+    } catch (error) {
+      if (error instanceof DoesNotExistError) {
+        return {
+          message: error.name,
+          status_code: error.status(),
+        };
+      }
     }
-
-    userRepo.update(id as string, {
-      name: name,
-      email: email,
-      admin: admin,
-      is_active: is_active,
-      password: bcrypt.hashSync(password as string, 8),
-    });
-
-    await userRepo.save(user);
-
-    const userResponse: UserResponse = {
-      id: id,
-      name: name,
-      admin: admin,
-      is_active: is_active,
-      email: email,
-    };
-
-    return { user: userResponse };
   }
 }

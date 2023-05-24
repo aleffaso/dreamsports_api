@@ -5,15 +5,24 @@ import { UserId } from "./types";
 
 export class DeleteUserService {
   async execute({ id }: UserId) {
-    const userRepo = AppDataSource.getRepository(UserTable);
-    const userId = await userRepo.findOne({ where: { id } });
+    try {
+      const userRepo = AppDataSource.getRepository(UserTable);
+      const userId = await userRepo.findOne({ where: { id } });
 
-    if (!userId) {
-      throw new DoesNotExistError("User does not exist");
+      if (!userId) {
+        throw new DoesNotExistError("User does not exist");
+      }
+
+      return await userRepo.delete({
+        id,
+      });
+    } catch (error) {
+      if (error instanceof DoesNotExistError) {
+        return {
+          message: error.name,
+          status_code: error.status(),
+        };
+      }
     }
-
-    return await userRepo.delete({
-      id,
-    });
   }
 }
