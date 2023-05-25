@@ -3,25 +3,25 @@ import CustomerController from "../../controllers/customers/CustomerController";
 import CustomerAuthMiddleware from "../../middlewares/customerAuthMiddleware";
 import UserAuthMiddleware from "../../middlewares/userAuthMiddleware";
 
-const CustomerRouter = Router();
+const customerRouter = Router();
 
-CustomerRouter.post("/customer/authenticate", CustomerController.authenticate);
-CustomerRouter.post("/customer", CustomerController.create);
-CustomerRouter.put(
+customerRouter.post("/customer/authenticate", CustomerController.authenticate);
+customerRouter.post("/customer", CustomerController.create);
+customerRouter.put(
   "/customer/:id",
   CustomerAuthMiddleware,
   CustomerController.update
 );
-CustomerRouter.get(
+customerRouter.get(
   "/customer/:id",
   CustomerAuthMiddleware,
   CustomerController.get
 );
-CustomerRouter.delete(
+customerRouter.delete(
   "/customer/:id",
   CustomerAuthMiddleware,
   CustomerController.delete
 );
-CustomerRouter.get("/customers", UserAuthMiddleware, CustomerController.list);
+customerRouter.get("/customers", UserAuthMiddleware, CustomerController.list);
 
-export default CustomerRouter;
+export default customerRouter;

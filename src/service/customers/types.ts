@@ -61,3 +61,23 @@ export type CustomerResponse = {
 export type CustomerId = {
   id: Customer["id"];
 };
+
+export type CustomerRefreshToken = {
+  id?: string;
+  expiresIn?: number;
+  customerId?: string;
+  refresh_token?: string;
+};
+
+export type CustomerRefreshTokenCreate = {
+  customerId: CustomerRefreshToken["customerId"];
+  refresh_token?: CustomerRefreshToken["refresh_token"];
+};
+
+export type CustomerRefreshTokenResponse = {
+  id: CustomerRefreshToken["id"];
+};
+
+export type CustomerRefreshTokenRequest = {
+  refresh_token?: CustomerRefreshToken["refresh_token"];
+};

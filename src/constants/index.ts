@@ -16,10 +16,12 @@ export const KEYS = {
   },
   PORT: Number(process.env.PORT as string) ?? undefined,
   JWT: {
-    USER: (process.env.JWT_USER as string) ?? "",
+    USER_TOKEN_KEY: (process.env.JWT_KEY_TOKEN_USER as string) ?? "",
+    USER_REFRESH_TOKEN_KEY:
+      (process.env.JWT_KEY_REFRESH_TOKEN_USER as string) ?? "",
     CUSTOMER: (process.env.JWT_CUSTOMER as string) ?? "",
-    EXPIRATION_TIME: Number(process.env.JWT_EXPIRATION_TIME as string) ?? 1,
-    EXPIRATION_UNIT_TIME:
-      (process.env.JWT_EXPIRATION_UNIT_TIME as string) ?? "hour", // "day" ||"hour" || "minute" ||"second"
+    TOKEN_EXPIRES_IN: (process.env.JWT_TOKEN_EXPIRES_IN as string) ?? "1d",
+    REFRESH_TOKEN_EXPIRES_IN:
+      (process.env.JWT_REFRESH_TOKEN_EXPIRES_IN as string) ?? "10d",
   },
 };

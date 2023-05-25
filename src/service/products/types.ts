@@ -1,8 +1,8 @@
-import { Brand } from "../../brands/types";
-import { Category } from "../../categories/types";
-import { Color } from "../../colors/types";
-import { Image } from "../../images/types";
-import { Size } from "../../sizes/types";
+import { Brand } from "../brands/types";
+import { Category } from "../categories/types";
+import { Color } from "../colors/types";
+import { Image } from "../images/types";
+import { Size } from "../sizes/types";
 
 export type Product = {
   id?: string;

@@ -1,30 +1,36 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { TokenExpiredError } from "jsonwebtoken";
 import { TokenPayload } from "./types";
 
-import "dotenv/config";
 import { KEYS } from "../constants";
+import { DoesNotExistError } from "../errors";
 
 export default function userAuthMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  const { authorization } = req.headers;
-
-  if (!authorization) return res.sendStatus(401);
-
-  const token = authorization.replace("Bearer", "").trim();
-
   try {
-    const { id } = jwt.verify(token, KEYS.JWT.USER) as TokenPayload;
+    const { authorization } = req.headers;
+
+    if (!authorization) {
+      throw new DoesNotExistError("Invalid token");
+    }
+
+    const token = authorization.replace("Bearer", "").trim();
+    const { id } = jwt.verify(token, KEYS.JWT.USER_TOKEN_KEY) as TokenPayload;
 
     req.userId = id;
 
     return next();
   } catch (error) {
-    return res.status(401).json({
-      message: "Invalid token",
-    });
+    if (
+      error instanceof DoesNotExistError ||
+      error instanceof TokenExpiredError
+    ) {
+      return {
+        status_code: res.status(401).json({ message: "Invalid token" }),
+      };
+    }
   }
 }

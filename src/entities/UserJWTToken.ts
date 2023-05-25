@@ -1,4 +1,3 @@
-import { Exclude } from "class-transformer";
 import {
   Entity,
   Column,
@@ -9,28 +8,18 @@ import {
   OneToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid"; //generate random id
-import { UserJWTToken } from "./UserJWTToken";
+import { User } from "./User";
 
-@Entity("users")
-export class User {
+@Entity("user_jwt_token")
+export class UserJWTToken {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
   @Column({ nullable: false })
-  name: string;
+  token: string;
 
   @Column({ nullable: false })
-  email: string;
-
-  @Column({ nullable: true })
-  admin: boolean;
-
-  @Exclude()
-  @Column({ nullable: false })
-  password: string;
-
-  @Column({ nullable: false, default: true })
-  is_active: boolean;
+  refresh_token: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -38,9 +27,9 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => UserJWTToken, (userJWTToken) => userJWTToken.user)
+  @OneToOne(() => User, (user) => user.userJWTToken)
   @JoinTable()
-  userJWTToken: UserJWTToken;
+  user: User;
 
   constructor() {
     if (!this.id) {

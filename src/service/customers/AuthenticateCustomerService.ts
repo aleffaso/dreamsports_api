@@ -9,33 +9,45 @@ import { DoesNotExistError } from "../../errors";
 
 class AuthenticateCustomerService {
   async execute({ email, password }: CustomerRequest) {
-    const customerRepo = AppDataSource.getRepository(CustomerTable);
-    const customer = await customerRepo.findOne({ where: { email } });
+    try {
+      const customerRepo = AppDataSource.getRepository(CustomerTable);
+      const customer = await customerRepo.findOne({ where: { email } });
 
-    if (!customer) {
-      throw new DoesNotExistError("E-mail does not exist");
+      if (!customer) {
+        throw new DoesNotExistError("Data does not match");
+      }
+
+      const isValidPassword = await bcrypt.compare(
+        password as string,
+        customer.password
+      );
+
+      if (!isValidPassword) {
+        throw new DoesNotExistError("Data does not match");
+      }
+
+      const customerResponse: CustomerResponse = {
+        id: customer.id,
+        fullName: customer.fullName,
+        email: email,
+      };
+
+      const token = jwt.sign({ id: customer.id }, KEYS.JWT.CUSTOMER, {
+        expiresIn: KEYS.JWT.USER_TOKEN_KEY,
+      });
+
+      return {
+        Customer: customerResponse,
+        token,
+      };
+    } catch (error) {
+      if (error instanceof DoesNotExistError) {
+        return {
+          message: error.name,
+          status_code: error.status(),
+        };
+      }
     }
-
-    const isValidPassword = await bcrypt.compare(
-      password as string,
-      customer.password
-    );
-
-    if (!isValidPassword) {
-      throw new DoesNotExistError("Password does not match");
-    }
-
-    const token = jwt.sign({ id: customer.id }, KEYS.JWT.CUSTOMER, {
-      expiresIn: "1d",
-    });
-
-    const customerResponse: CustomerResponse = {
-      id: customer.id,
-      fullName: customer.fullName,
-      email: email,
-    };
-
-    return { Customer: customerResponse, token };
   }
 }
 

@@ -5,10 +5,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid"; //generate random id
+import { CustomerRefreshToken } from "./CustomerRefreshToken";
 
 @Entity("customers")
 export class Customer {
@@ -66,6 +69,13 @@ export class Customer {
   generateFullName() {
     this.fullName = `${this.firstName} ${this.lastName}`;
   }
+
+  @OneToMany(
+    () => CustomerRefreshToken,
+    (customerRefreshToken) => customerRefreshToken.customer
+  )
+  @JoinTable()
+  refresh_token: CustomerRefreshToken;
 
   constructor() {
     if (!this.id) {

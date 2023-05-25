@@ -31,22 +31,30 @@ export type UserId = {
   id: User["id"];
 };
 
-export type UserRefreshToken = {
+export type UserJWTToken = {
   id?: string;
   expiresIn?: number;
   userId?: string;
   refresh_token?: string;
+  token?: string;
 };
 
-export type UserRefreshTokenCreate = {
-  userId: UserRefreshToken["userId"];
-  refresh_token?: UserRefreshToken["refresh_token"];
+export type UserJWTTokenCreate = {
+  userId: UserJWTToken["userId"];
+  refresh_token?: UserJWTToken["refresh_token"];
 };
 
-export type UserRefreshTokenResponse = {
-  id: UserRefreshToken["id"];
+export type UserJWTTokenResponse = Omit<
+  UserJWTToken,
+  "id" | "expiresIn" | "userId"
+>;
+
+export type UserJWTTokenRequest = {
+  refresh_token?: UserJWTToken["refresh_token"];
 };
 
-export type UserRefreshTokenRequest = {
-  refresh_token?: UserRefreshToken["refresh_token"];
+export type TokenPayload = {
+  id: string;
+  iat: number;
+  exp: number;
 };

@@ -8,10 +8,10 @@ import {
   JoinTable,
 } from "typeorm";
 import { v4 as uuid } from "uuid"; //generate random id
-import { User } from "./User";
+import { Customer } from "./Customer";
 
-@Entity("refresh_token")
-export class RefreshToken {
+@Entity("customer_refresh_token")
+export class CustomerRefreshToken {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
@@ -24,9 +24,9 @@ export class RefreshToken {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(() => User, (user) => user.refresh_token)
+  @ManyToOne(() => Customer, (customer) => customer.refresh_token)
   @JoinTable()
-  user: User;
+  customer: Customer;
 
   constructor() {
     if (!this.id) {
