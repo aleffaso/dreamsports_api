@@ -5,7 +5,7 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
   JoinTable,
-  OneToOne,
+  ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid"; //generate random id
 import { User } from "./User";
@@ -21,13 +21,16 @@ export class UserJWTToken {
   @Column({ nullable: false })
   refresh_token: string;
 
+  @Column({ nullable: false, default: true })
+  active: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => User, (user) => user.userJWTToken)
+  @ManyToOne(() => User, (user) => user.userJWTToken)
   @JoinTable()
   user: User;
 

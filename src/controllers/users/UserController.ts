@@ -6,7 +6,7 @@ import { CreateUserService } from "../../service/users/CreateUserService";
 import { UpdateUserService } from "../../service/users/UpdateUserService";
 import { DeleteUserService } from "../../service/users/DeleteUserService";
 import { AuthenticateUserService } from "../../service/users/AuthenticateUserService";
-import { GenerateRefreshTokenUserService } from "../../service/users/refresh_token/GenerateRefreshTokenUserService";
+import { RegenerateRefreshTokenUserService } from "../../service/users/refresh_token/RegenerateRefreshTokenUserService";
 
 export default new (class UserController {
   async authenticate(req: Request, res: Response) {
@@ -28,15 +28,15 @@ export default new (class UserController {
   async refreshToken(req: Request, res: Response) {
     const { refresh_token } = req.body;
     try {
-      const generateRefreshTokenUserService =
-        new GenerateRefreshTokenUserService();
+      const regenerateRefreshTokenUserService =
+        new RegenerateRefreshTokenUserService();
 
-      const generateRefreshToken =
-        await generateRefreshTokenUserService.execute({
+      const regenerateRefreshToken =
+        await regenerateRefreshTokenUserService.execute({
           refresh_token,
         });
 
-      return res.json(generateRefreshToken);
+      return res.json(regenerateRefreshToken);
     } catch (error) {
       res.json({ error: error });
     }

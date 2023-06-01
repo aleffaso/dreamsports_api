@@ -1,12 +1,10 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 import { AppDataSource } from "../../data-source";
 import { User as UserTable } from "../../entities/User";
-import { UserRequest, UserResponse } from "./types";
-import { KEYS } from "../../constants";
+import { UserJWTTokenResponse, UserRequest, UserResponse } from "./types";
 import { DoesNotExistError } from "../../errors";
-import { CreateJWTUserService } from "./CreateJWTUserService";
+import { CreateJWTUserService } from "./refresh_token/CreateJWTUserService";
 class AuthenticateUserService {
   async execute({ email, password }: UserRequest) {
     try {
@@ -34,22 +32,16 @@ class AuthenticateUserService {
         email: email,
       };
 
-      const token = jwt.sign({ id: user.id }, KEYS.JWT.USER_TOKEN_KEY, {
-        expiresIn: KEYS.JWT.TOKEN_EXPIRES_IN,
-      });
-
-      const refresh_token = jwt.sign(
-        { id: user.id },
-        KEYS.JWT.USER_REFRESH_TOKEN_KEY,
-        {
-          expiresIn: KEYS.JWT.REFRESH_TOKEN_EXPIRES_IN,
-        }
-      );
-
       const createJWTUserService = new CreateJWTUserService();
-      await createJWTUserService.execute({ token, refresh_token, user });
+      const { token, refresh_token } = (await createJWTUserService.execute({
+        ...user,
+      })) as UserJWTTokenResponse;
 
-      return { user: userResponse, token, refresh_token };
+      return {
+        user: userResponse,
+        token,
+        refresh_token,
+      };
     } catch (error) {
       if (error instanceof DoesNotExistError) {
         return {
